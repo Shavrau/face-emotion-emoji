@@ -1,20 +1,36 @@
-"""
-Módulo responsável pela detecção de faces e reconhecimento de emoções faciais.
-"""
+"""Facial expression and emotion detection module."""
+
+from fer import FER
 
 
 class EmotionDetector:
-    """
-    Classe para encapsular a detecção de emoções usando FER (Facial Emotion Recognition).
-    """
+    """Facial emotion recognition wrapper using FER."""
 
-    def __init__(self):
-        # TODO: Inicializar o detector de emoções FER
-        pass
+    def __init__(self, use_mtcnn: bool = False):
+        self.detector = FER(mtcnn=use_mtcnn)
 
     def detect_emotions(self, frame):
+        """Returns detected faces with bounding boxes and emotion probabilities."""
+        return self.detector.detect_emotions(frame)
+
+    def get_top_emotion(self, frame):
         """
-        Recebe um frame da câmera e retorna as emoções e caixas delimitadoras das faces.
+        Analyzes the frame and returns dominant emotion and coordinates for primary face.
+        Returns: (emotion, score, bbox)
         """
-        # TODO: Processar o frame e retornar a emoção predominante e coordenadas
-        pass
+        results = self.detector.detect_emotions(frame)
+        if not results:
+            return None, 0.0, None
+
+        first_face = results[0]
+        bbox_raw = first_face.get("box")
+        bbox = tuple(int(v) for v in bbox_raw) if bbox_raw is not None else None
+        emotions = first_face.get("emotions", {})
+
+        if not emotions:
+            return None, 0.0, bbox
+
+        top_emotion = max(emotions, key=emotions.get)
+        top_score = emotions[top_emotion]
+
+        return top_emotion, top_score, bbox

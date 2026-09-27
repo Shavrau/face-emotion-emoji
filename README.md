@@ -1,60 +1,115 @@
-# Espelho de Emoji 🎭
+# 🎭 Real-Time Emoji Mirror
 
-Projeto de Visão Computacional que detecta expressões faciais via webcam e renderiza emojis correspondentes em tempo real.
+An interactive **Computer Vision** and **Deep Learning** application that detects facial expressions in real time via webcam and overlays matching emojis over the user's face or on a sleek HUD dashboard.
 
-## Estrutura do Projeto
+---
+
+## ✨ Features
+
+- **7 Facial Emotion Classifications**: Happy 😄, Sad 😢, Angry 😡, Surprise 😲, Fear 😨, Disgust 🤢, and Neutral 😐.
+- **3 Interactive Display Modes**:
+  - 🎭 **Face Mask**: Scales and centers the emoji over the detected face (Instagram/Snapchat filter style).
+  - 📊 **HUD Card**: Displays a modern semi-transparent telemetry card in the top-right corner with emotion name and confidence percentage.
+  - 🌟 **Both**: Combines face mask overlay and HUD card simultaneously.
+- **Natural Mirror Effect**: Horizontal reflection (`cv2.flip`) mimicking physical mirror behavior.
+- **Alpha Blending**: Mathematical pixel-by-pixel compositing with boundary clipping to avoid black box artifacts or edge overflow errors.
+- **Optimized Performance (30+ FPS)**: Frame-skipping neural inference coupled with temporal persistence to eliminate flickering.
+- **Built-in Asset Generator**: Procedural emoji generation script using Pillow with supersampling anti-aliasing.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Role |
+| :--- | :--- |
+| **Python 3.12** | Core programming language |
+| **OpenCV (`opencv-python`)** | Video stream acquisition, affine transformations, HighGUI, and rendering |
+| **FER (*Facial Emotion Recognition*)** | Haar Cascade face detection and emotion classification |
+| **TensorFlow Lite** | Neural network runtime for expression inference |
+| **NumPy** | Matrix operations and alpha blending vector math |
+| **Pillow (PIL)** | Procedural emoji asset rendering and manipulation |
+
+---
+
+## 📁 Project Structure
 
 ```text
 visao_computacional/
 ├── assets/
-│   └── emojis/          # Imagens PNG com fundo transparente para cada emoção
+│   └── emojis/              # 256x256 transparent PNG emoji assets
+├── scripts/
+│   └── generate_emojis.py   # Procedural asset generator script
 ├── src/
-│   ├── __init__.py
-│   ├── config.py        # Mapeamentos e constantes (câmera, nomes dos emojis)
-│   ├── detector.py      # Lógica de detecção de expressões faciais (FER)
-│   └── overlay.py       # Lógica para sobreposição de emojis sobre o vídeo
-├── venv/                # Ambiente virtual Python
-├── .gitignore           # Arquivos ignorados pelo Git
-├── main.py              # Ponto de entrada do script (loop da webcam)
-├── README.md            # Documentação de uso
-└── requirements.txt     # Dependências do projeto
+│   ├── __init__.py          # Package initialization
+│   ├── config.py            # Global settings, emotion maps, and labels
+│   ├── detector.py          # EmotionDetector class (FER wrapper)
+│   └── overlay.py           # EmojiOverlay class (alpha blending & HUD)
+├── .gitignore               # Git ignored patterns (venv, pycache, etc.)
+├── main.py                  # Real-time application entry point
+├── README.md                # Project documentation
+└── requirements.txt         # Pinned dependency requirements
 ```
 
-## Como Usar
+---
 
-### 1. Ativar o Ambiente Virtual (`venv`)
+## 🚀 Getting Started
 
-No terminal (PowerShell no Windows):
-```powershell
-.\venv\Scripts\Activate.ps1
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
 ```
 
-*(Ou no Command Prompt `cmd`)*:
-```cmd
-venv\Scripts\activate.bat
-```
+### 2. Create and Activate Virtual Environment
 
-### 2. Instalar as Dependências
+- **Windows (PowerShell)**:
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
 
-Com o ambiente ativado, execute:
+- **Linux / macOS**:
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+### 3. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Adicionar os Emojis
+### 4. Run the Application
 
-Adicione imagens PNG (preferencialmente com canal alfa / transparência) na pasta `assets/emojis/` com os nomes correspondentes:
-- `happy.png`
-- `sad.png`
-- `angry.png`
-- `surprise.png`
-- `fear.png`
-- `disgust.png`
-- `neutral.png`
-
-### 4. Executar
-
-Após implementar a lógica em `main.py` e nos módulos de `src/`:
 ```bash
 python main.py
 ```
+
+---
+
+## 🎮 Keyboard Controls
+
+With the video window active:
+
+| Key | Description |
+| :---: | :--- |
+| **`m`** | Cycle display modes (**Mask + HUD** ➔ **Face Mask** ➔ **HUD Card**) |
+| **`f`** | Toggle mirror reflection (horizontal flip) |
+| **`q`** | Quit application safely |
+
+---
+
+## ⚙️ Configuration
+
+Custom parameters can be tuned in [src/config.py](src/config.py):
+- `FRAME_SKIP`: Number of frames between neural inferences (default: `2`).
+- `CAMERA_INDEX`: Device camera index (default: `0`).
+- `MIRROR_EFFECT`: Default mirror reflection state (`True` or `False`).
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

@@ -1,3 +1,1 @@
-"""
-Pacote principal do projeto Espelho de Emoji.
-"""
+"""Core package for the Emoji Mirror application."""

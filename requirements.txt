@@ -1,5 +1,7 @@
 fer
-opencv-python
+opencv-python<5
+opencv-contrib-python<5
+setuptools<70
 tensorflow
 numpy
 Pillow

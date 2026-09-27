@@ -1,11 +1,13 @@
-# Emojis do Projeto
+# Project Emoji Assets
 
-Coloque aqui os arquivos de imagem dos emojis (preferencialmente em formato PNG com fundo transparente):
+This directory stores the PNG image assets (with alpha transparency) for each supported emotion:
 
-- `happy.png` (Feliz)
-- `sad.png` (Triste)
-- `angry.png` (Bravo/Irritado)
-- `surprise.png` (Surpreso)
-- `fear.png` (Com medo)
-- `disgust.png` (Com nojo)
-- `neutral.png` (Neutro)
+- `happy.png`
+- `sad.png`
+- `angry.png`
+- `surprise.png`
+- `fear.png`
+- `disgust.png`
+- `neutral.png`
+
+You can customize or replace these with any transparent PNG files matching these names.
